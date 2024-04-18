@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "955658198089",
+    "project_id": "asianmovie-2a17e",
+    "storage_bucket": "asianmovie-2a17e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955658198089:android:6d5b5469629ea289183398",
+        "android_client_info": {
+          "package_name": "com.asiamovie.videostreamingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955658198089-oi60e6t7tc567q18k7unv3348r06v6rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.asiamovie.videostreamingapp",
+            "certificate_hash": "6cf7b9bbcf2667c24ddb063dcc747f4a41d7a507"
+          }
+        },
+        {
+          "client_id": "955658198089-6n3pir88dimq2nshkkf6vku7o0i8c2or.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxTAKp_AXRTAPRBeK3IH4uig9rwaRrCPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955658198089-6n3pir88dimq2nshkkf6vku7o0i8c2or.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
