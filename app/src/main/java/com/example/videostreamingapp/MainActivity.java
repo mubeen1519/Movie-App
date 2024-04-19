@@ -318,38 +318,8 @@ public class MainActivity extends BaseActivity {
 
     public void setHeader() {
         if (isAndroidTV()) {
-            if (myApplication.getIsLogin() && navigationView != null) {
-                View headerView = navigationView.getHeaderView(0);
-                searchBar = headerView.findViewById(R.id.search_bar);
-                searchBar.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+           return;
 
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        // TODO Auto-generated method stub
-                        if (!hasFocus) {
-                            searchBar.setQuery("", false);
-                        }
-                    }
-                });
-                searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String arg0) {
-                        // TODO Auto-generated method stub
-                        Intent intent = new Intent(MainActivity.this, SearchHorizontalActivity.class);
-                        intent.putExtra("search", arg0);
-                        startActivity(intent);
-                        searchBar.clearFocus();
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String arg0) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                });
-
-            }
         } else {
             if (myApplication.getIsLogin() && navigationView != null) {
                 View header = navigationView.getHeaderView(0);

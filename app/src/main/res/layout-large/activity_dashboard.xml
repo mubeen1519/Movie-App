@@ -67,6 +67,7 @@
                 android:layout_gravity="center"
                 app:cardBackgroundColor="@color/card_info_bg"
                 app:cardCornerRadius="10dp"
+                android:background="@drawable/card_selector"
                 app:cardUseCompatPadding="false"
                 app:elevation="1dp">
 

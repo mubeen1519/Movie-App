@@ -12,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/navigation_bg"
-        app:headerLayout="@layout/left_nav_header"
         app:itemBackground="@drawable/nav_item_bg"
         app:itemIconTint="@color/state_list"
         app:itemTextColor="@color/state_list"
