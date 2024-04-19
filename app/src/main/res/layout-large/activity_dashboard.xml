@@ -65,7 +65,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:cardBackgroundColor="@color/card_info_bg"
+                app:foreground="@drawable/card_selector"
                 app:cardCornerRadius="10dp"
                 app:cardUseCompatPadding="false"
                 app:elevation="1dp">
@@ -73,7 +73,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/card_selector">
+                    android:background="@color/card_info_bg">
                 </LinearLayout>
 
                 <RelativeLayout
