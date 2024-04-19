@@ -383,15 +383,19 @@ public class TVDetailsActivity extends BaseActivity {
     }
 
     private void initRipplePlay() {
-        PlayRippleFragment playRippleFragment = PlayRippleFragment.newInstance(itemTV.getTvImage());
-        playRippleFragment.setOnSkipClickListener(new RvOnClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                toolbar.setVisibility(View.GONE);
-                initPlayer(itemTV.getTvURL());
-            }
-        });
-        fragmentManager.beginTransaction().replace(R.id.playerSection, playRippleFragment).commitAllowingStateLoss();
+        if(isAndroidTV()){
+            initPlayer(itemTV.getTvURL());
+        }else {
+            PlayRippleFragment playRippleFragment = PlayRippleFragment.newInstance(itemTV.getTvImage());
+            playRippleFragment.setOnSkipClickListener(new RvOnClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    toolbar.setVisibility(View.GONE);
+                    initPlayer(itemTV.getTvURL());
+                }
+            });
+            fragmentManager.beginTransaction().replace(R.id.playerSection, playRippleFragment).commitAllowingStateLoss();
+        }
     }
 
     private void initPlayer(String streamUrl) {
