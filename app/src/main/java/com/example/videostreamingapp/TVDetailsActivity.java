@@ -403,6 +403,10 @@ public class TVDetailsActivity extends BaseActivity {
                 fragmentManager.beginTransaction().replace(R.id.playerSection, premiumContentFragment).commitAllowingStateLoss();
             }
         } else {
+            ViewGroup.LayoutParams params = frameLayout.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            frameLayout.setLayoutParams(params);
             setPlayer(streamUrl);
         }
     }

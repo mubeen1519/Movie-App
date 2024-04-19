@@ -173,6 +173,7 @@ public class TVExoPlayerFragment extends Fragment {
             }
         });
 
+        btnTryAgain.setVisibility(View.GONE);
         btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
