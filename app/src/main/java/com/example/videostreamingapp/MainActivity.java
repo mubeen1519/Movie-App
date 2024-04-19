@@ -318,9 +318,20 @@ public class MainActivity extends BaseActivity {
 
     public void setHeader() {
         if (isAndroidTV()) {
-           return;
+            if (myApplication.getIsLogin()) {
+                navigationView.getMenu().findItem(R.id.menu_go_login).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_go_profile).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_go_logout).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_go_dashboard).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_go_watch_list).setVisible(true);
+            } else {
+                navigationView.getMenu().findItem(R.id.menu_go_login).setVisible(true);
+                navigationView.getMenu().findItem(R.id.menu_go_profile).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_go_logout).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_go_dashboard).setVisible(false);
+                navigationView.getMenu().findItem(R.id.menu_go_watch_list).setVisible(false);
 
-
+            }
         } else {
             if (myApplication.getIsLogin() && navigationView != null) {
                 View header = navigationView.getHeaderView(0);
