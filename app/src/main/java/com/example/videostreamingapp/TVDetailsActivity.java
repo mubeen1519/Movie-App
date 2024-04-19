@@ -536,12 +536,6 @@ public class TVDetailsActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 //            casty.addMediaRouteMenuItem(menu);
 

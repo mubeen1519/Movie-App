@@ -86,7 +86,9 @@ public class TVExoPlayerFragment extends Fragment {
             channelUrl = getArguments().getString(streamUrl);
         }
         progressBar = rootView.findViewById(R.id.progressBar);
-        imgFull = rootView.findViewById(R.id.img_full_scr);
+        if(!isAndroidTV()) {
+            imgFull = rootView.findViewById(R.id.img_full_scr);
+        }
         imgSetting = rootView.findViewById(R.id.img_setting);
         imgSetting.setVisibility(View.GONE);
         btnTryAgain = rootView.findViewById(R.id.btn_try_again);
@@ -104,6 +106,7 @@ public class TVExoPlayerFragment extends Fragment {
         playerView.setUseController(true);
         playerView.requestFocus();
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
+
 
 
         Uri uri = Uri.parse(channelUrl);
@@ -193,7 +196,6 @@ public class TVExoPlayerFragment extends Fragment {
             }
         });
 
-        btnTryAgain.setVisibility(View.GONE);
         btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
