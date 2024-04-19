@@ -1,5 +1,9 @@
 package com.example.fragment;
 
+import static android.content.Context.UI_MODE_SERVICE;
+
+import android.app.UiModeManager;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -45,9 +49,13 @@ import com.google.android.exoplayer2.util.Util;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class TVExoPlayerFragment extends Fragment {
     private static final String TAG = "StreamPlayerActivity";
     private SimpleExoPlayer player;
+
+
     private DefaultBandwidthMeter BANDWIDTH_METER;
     private DataSource.Factory mediaDataSourceFactory;
     private ProgressBar progressBar;
@@ -56,6 +64,8 @@ public class TVExoPlayerFragment extends Fragment {
     Button btnTryAgain;
     SubtitleView subtitleView;
     String channelUrl;
+
+    PlayerView playerView;
     private static final String streamUrl = "streamUrl";
 
     public static TVExoPlayerFragment newInstance(String SId) {
@@ -84,7 +94,11 @@ public class TVExoPlayerFragment extends Fragment {
 
         mediaDataSourceFactory = buildDataSourceFactory(true);
         player = new SimpleExoPlayer.Builder(requireActivity()).build();
-        PlayerView playerView = rootView.findViewById(R.id.exoPlayerView);
+        if(isAndroidTV()){
+            playerView = rootView.findViewById(R.id.playerView);
+        }else {
+             playerView = rootView.findViewById(R.id.exoPlayerView);
+        }
         subtitleView = rootView.findViewById(R.id.exo_subtitles);
         playerView.setPlayer(player);
         playerView.setUseController(true);
@@ -269,5 +283,10 @@ public class TVExoPlayerFragment extends Fragment {
             player.stop();
             player.release();
         }
+    }
+
+    private boolean isAndroidTV() {
+        UiModeManager uiModeManager = (UiModeManager) Objects.requireNonNull(getContext()).getSystemService(UI_MODE_SERVICE);
+        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }
