@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <!-- Combine existing background with selected background -->
+        <layer-list>
+            <!-- Existing CardView background -->
+            <item android:id="@+id/card_info">
+                <shape android:shape="rectangle">
+                    <!-- Define existing background properties here -->
+                    <solid android:color="@color/card_info_bg" />
+                </shape>
+            </item>
+            <!-- Selected state background -->
+            <item android:drawable="@drawable/card_selected" android:state_focused="true" />
+        </layer-list>
+    </item>
+</selector>
