@@ -1,6 +1,10 @@
 package com.example.adapter;
 
+import static android.content.Context.UI_MODE_SERVICE;
+
+import android.app.UiModeManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +45,15 @@ public class HomeShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final ItemRowHolder holder = (ItemRowHolder) viewHolder;
         final ItemShow singleItem = dataList.get(position);
 
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0, 0, (int) mContext.getResources().getDimension(R.dimen.item_space), (int) mContext.getResources().getDimension(R.dimen.item_space));
-        holder.rootView.setLayoutParams(layoutParams);
-
+        if(isAndroidTV()){
+            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ViewGroup.getDefaultSize(200,150), ViewGroup.getDefaultSize(200,150));
+            layoutParams.setMargins(0, 0, (int) mContext.getResources().getDimension(R.dimen.item_space), (int) mContext.getResources().getDimension(R.dimen.item_space));
+            holder.rootView.setLayoutParams(layoutParams);
+        }else {
+            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 0, (int) mContext.getResources().getDimension(R.dimen.item_space), (int) mContext.getResources().getDimension(R.dimen.item_space));
+            holder.rootView.setLayoutParams(layoutParams);
+        }
         if (!singleItem.getShowImage().isEmpty()) {
             Picasso.get().load(singleItem.getShowImage()).placeholder(R.drawable.place_holder_show).into(holder.image);
         }
@@ -76,5 +85,10 @@ public class HomeShowAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ivPremium = itemView.findViewById(R.id.ivPremium);
             rootView = itemView.findViewById(R.id.rootView);
         }
+    }
+
+    private boolean isAndroidTV() {
+        UiModeManager uiModeManager = (UiModeManager) mContext.getSystemService(UI_MODE_SERVICE);
+        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }

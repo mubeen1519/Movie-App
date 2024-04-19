@@ -1,7 +1,11 @@
 package com.example.adapter;
 
+import static android.content.Context.UI_MODE_SERVICE;
+
 import android.app.Activity;
+import android.app.UiModeManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.item.ItemSlider;
@@ -55,6 +60,11 @@ public class SliderAdapter extends PagerAdapter {
         RelativeLayout rootLayout = imageLayout.findViewById(R.id.rootLayout);
 
 //        textTitle.setSelected(true);
+        if(isAndroidTV()){
+            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ViewGroup.getDefaultSize(400,150), ViewGroup.getDefaultSize(150,150));
+            layoutParams.setMargins(0, 0, (int) context.getResources().getDimension(R.dimen.item_space), (int) context.getResources().getDimension(R.dimen.item_space));
+            rootLayout.setLayoutParams(layoutParams);
+        }
 
         final ItemSlider itemChannel = mList.get(position);
         if (!itemChannel.getSliderImage().isEmpty()) {
@@ -96,5 +106,10 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         (container).removeView((View) object);
+    }
+
+    private boolean isAndroidTV() {
+        UiModeManager uiModeManager = (UiModeManager) context.getSystemService(UI_MODE_SERVICE);
+        return uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION;
     }
 }
