@@ -19,7 +19,6 @@ repositories {
 
 android {
     compileSdkVersion 33
-
     defaultConfig {
         applicationId "com.asiamovie.videostreamingapp"
         minSdkVersion 21
