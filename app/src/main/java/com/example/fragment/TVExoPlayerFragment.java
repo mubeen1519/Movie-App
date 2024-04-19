@@ -112,6 +112,11 @@ public class TVExoPlayerFragment extends Fragment {
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
 
+        if(isAndroidTV()){
+            Events.FullScreen fullScreen = new Events.FullScreen();
+            fullScreen.setFullScreen(true);
+            GlobalBus.getBus().post(fullScreen);
+        }
         player.addListener(new Player.EventListener() {
             @Override
             public void onTimelineChanged(@NotNull Timeline timeline, int reason) {
