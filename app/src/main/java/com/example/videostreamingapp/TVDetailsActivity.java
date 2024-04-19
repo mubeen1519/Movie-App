@@ -516,6 +516,9 @@ public class TVDetailsActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if(isAndroidTV()){
+            super.onBackPressed();
+        }
         if (isFullScreen) {
             Events.FullScreen fullScreen = new Events.FullScreen();
             fullScreen.setFullScreen(false);
