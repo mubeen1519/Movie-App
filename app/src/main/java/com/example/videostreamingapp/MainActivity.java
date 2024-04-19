@@ -320,6 +320,7 @@ public class MainActivity extends BaseActivity {
         if (isAndroidTV()) {
            return;
 
+
         } else {
             if (myApplication.getIsLogin() && navigationView != null) {
                 View header = navigationView.getHeaderView(0);
