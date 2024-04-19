@@ -103,6 +103,7 @@ public class TVExoPlayerFragment extends Fragment {
         playerView.setPlayer(player);
         playerView.setUseController(true);
         playerView.requestFocus();
+        player.setRepeatMode(Player.REPEAT_MODE_ALL);
 
 
         Uri uri = Uri.parse(channelUrl);
