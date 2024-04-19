@@ -179,23 +179,24 @@ public class TVExoPlayerFragment extends Fragment {
             }
         });
 
-        imgFull.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isFullScr) {
-                    isFullScr = false;
-                    Events.FullScreen fullScreen = new Events.FullScreen();
-                    fullScreen.setFullScreen(false);
-                    GlobalBus.getBus().post(fullScreen);
-                } else {
-                    isFullScr = true;
-                    Events.FullScreen fullScreen = new Events.FullScreen();
-                    fullScreen.setFullScreen(true);
-                    GlobalBus.getBus().post(fullScreen);
+        if(!isAndroidTV()) {
+            imgFull.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isFullScr) {
+                        isFullScr = false;
+                        Events.FullScreen fullScreen = new Events.FullScreen();
+                        fullScreen.setFullScreen(false);
+                        GlobalBus.getBus().post(fullScreen);
+                    } else {
+                        isFullScr = true;
+                        Events.FullScreen fullScreen = new Events.FullScreen();
+                        fullScreen.setFullScreen(true);
+                        GlobalBus.getBus().post(fullScreen);
+                    }
                 }
-            }
-        });
-
+            });
+        }
         btnTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
