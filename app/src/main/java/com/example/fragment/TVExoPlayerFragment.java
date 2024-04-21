@@ -135,7 +135,7 @@ public class TVExoPlayerFragment extends Fragment {
                     playerView.setOnKeyListener(new View.OnKeyListener() {
                         @Override
                         public boolean onKey(View v, int keyCode, KeyEvent event) {
-                            if (keyCode == KeyEvent.KEYCODE_MEDIA_NEXT) {
+                            if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                                 // Navigate to the next video
                                 int nextIndex = (selectedIndex + 1) % videoList.size();
                                 // Update fragment with the next video
