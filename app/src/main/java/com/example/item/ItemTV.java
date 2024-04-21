@@ -1,6 +1,11 @@
 package com.example.item;
 
-public class ItemTV {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class ItemTV implements Parcelable {
     private String tvId;
     private String tvName;
     private String tvImage;
@@ -13,6 +18,37 @@ public class ItemTV {
     private boolean isPremium = false;
     private String tvView;
     private String tvShareLink;
+
+    protected ItemTV(Parcel in) {
+        tvId = in.readString();
+        tvName = in.readString();
+        tvImage = in.readString();
+        tvDescription = in.readString();
+        tvType = in.readString();
+        tvURL = in.readString();
+        tvURL2 = in.readString();
+        tvURL3 = in.readString();
+        tvCategory = in.readString();
+        isPremium = in.readByte() != 0;
+        tvView = in.readString();
+        tvShareLink = in.readString();
+    }
+
+    public ItemTV() {
+        // You can initialize default values here if needed
+    }
+
+    public static final Creator<ItemTV> CREATOR = new Creator<ItemTV>() {
+        @Override
+        public ItemTV createFromParcel(Parcel in) {
+            return new ItemTV(in);
+        }
+
+        @Override
+        public ItemTV[] newArray(int size) {
+            return new ItemTV[size];
+        }
+    };
 
     public String getTvId() {
         return tvId;
@@ -109,5 +145,26 @@ public class ItemTV {
 
     public void setTvURL3(String tvURL3) {
         this.tvURL3 = tvURL3;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(tvId);
+        dest.writeString(tvName);
+        dest.writeString(tvImage);
+        dest.writeString(tvDescription);
+        dest.writeString(tvType);
+        dest.writeString(tvURL);
+        dest.writeString(tvURL2);
+        dest.writeString(tvURL3);
+        dest.writeString(tvCategory);
+        dest.writeByte((byte) (isPremium ? 1 : 0));
+        dest.writeString(tvView);
+        dest.writeString(tvShareLink);
     }
 }

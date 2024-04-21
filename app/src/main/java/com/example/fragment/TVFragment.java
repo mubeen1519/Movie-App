@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -210,6 +211,12 @@ public class TVFragment extends Fragment implements FilterDialog.FilterDialogLis
                     String sportId = mListItem.get(position).getTvId();
                     Intent intent = new Intent(getActivity(), TVDetailsActivity.class);
                     intent.putExtra("Id", sportId);
+                    intent.putExtra("Index", position); // Pass the selected index
+                    Bundle bundle = new Bundle();
+                    intent.putParcelableArrayListExtra("VideoList", mListItem);
+
+                    // Put the Bundle in the Intent
+                    intent.putExtra("bundle",bundle);
                     startActivity(intent);
                 }
             });

@@ -93,10 +93,12 @@ public class TVDetailsActivity extends BaseActivity {
     LinearLayout mAdViewLayout;
     boolean isPurchased = false, isWatchList = false;
     private Casty casty;
+    int selectedIndex;
     ImageView imgFacebook, imgTwitter, imgWhatsApp;
     MaterialButton btnWatchList, btnServer1, btnServer2, btnServer3;
     InfoAdapter infoAdapter;
     MediaRouteButton mediaRouteButton;
+    ArrayList<ItemTV> videoList;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -135,6 +137,12 @@ public class TVDetailsActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
         Intent intent = getIntent();
         Id = intent.getStringExtra("Id");
+        selectedIndex = getIntent().getIntExtra("Index", 0);
+        Bundle data = this.getIntent().getBundleExtra("bundle");
+        if(data != null) {
+            videoList = data.getParcelableArrayList("VideoList");
+        }
+
         if (intent.hasExtra("isNotification")) {
             isFromNotification = true;
         }
@@ -447,8 +455,8 @@ public class TVDetailsActivity extends BaseActivity {
             switch (itemTV.getTvType()) { //URL Embed
                 case Constant.VIDEO_TYPE_HLS:
                     if (isAndroidTV()) {
-                        TVExoPlayerFragment exoPlayerFragment = TVExoPlayerFragment.newInstance(streamUrl);
-                        fragmentManager.beginTransaction().replace(R.id.playerSection, exoPlayerFragment).commitAllowingStateLoss();
+                        TVExoPlayerFragment fragment = TVExoPlayerFragment.newInstance(selectedIndex, videoList);
+                        fragmentManager.beginTransaction().replace(R.id.playerSection, fragment).commitAllowingStateLoss();
                     } else {
                         if (casty.isConnected()) {
                             castScreen();
@@ -602,4 +610,8 @@ public class TVDetailsActivity extends BaseActivity {
             }
         }
     }
+    public interface OnNextVideoListener {
+        void onNextVideo();
+    }
 }
+

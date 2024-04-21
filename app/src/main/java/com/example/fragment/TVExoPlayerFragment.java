@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.item.ItemTV;
 import com.example.util.Events;
 import com.example.util.GlobalBus;
 import com.example.videostreamingapp.R;
@@ -37,6 +39,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource;
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.SubtitleView;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -49,6 +52,7 @@ import com.google.android.exoplayer2.util.Util;
 import org.greenrobot.eventbus.Subscribe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TVExoPlayerFragment extends Fragment {
@@ -66,6 +70,10 @@ public class TVExoPlayerFragment extends Fragment {
     String channelUrl;
 
     PlayerView playerView;
+
+    int selectedIndex;
+
+    ArrayList<ItemTV> videoList;
     private static final String streamUrl = "streamUrl";
 
     public static TVExoPlayerFragment newInstance(String SId) {
@@ -75,13 +83,24 @@ public class TVExoPlayerFragment extends Fragment {
         f.setArguments(args);
         return f;
     }
+    public static TVExoPlayerFragment newInstance(int selectedIndex, ArrayList<ItemTV> videoList) {
+        TVExoPlayerFragment fragment = new TVExoPlayerFragment();
+        Bundle args = new Bundle();
+        args.putInt("SelectedIndex", selectedIndex);
+        args.putParcelableArrayList("VideoList", videoList);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exo_player, container, false);
         GlobalBus.getBus().register(this);
-
+        if(getArguments() != null) {
+             selectedIndex = getArguments().getInt("SelectedIndex", 0);
+            videoList = getArguments().getParcelableArrayList("VideoList");
+        }
         if (getArguments() != null) {
             channelUrl = getArguments().getString(streamUrl);
         }
@@ -107,6 +126,29 @@ public class TVExoPlayerFragment extends Fragment {
         playerView.requestFocus();
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
 
+        playerView.setControllerVisibilityListener(new PlayerControlView.VisibilityListener() {
+            @Override
+            public void onVisibilityChange(int visibility) {
+                if (visibility == View.VISIBLE) {
+                    playerView.setOnKeyListener(new View.OnKeyListener() {
+                        @Override
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            if (keyCode == KeyEvent.KEYCODE_MEDIA_NEXT) {
+                                // Navigate to the next video
+                                int nextIndex = (selectedIndex + 1) % videoList.size();
+                                // Update fragment with the next video
+                                TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList);
+                                getParentFragmentManager().beginTransaction()
+                                        .replace(R.id.playerSection, nextFragment)
+                                        .commit();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
 
 
         Uri uri = Uri.parse(channelUrl);
@@ -244,6 +286,16 @@ public class TVExoPlayerFragment extends Fragment {
 
     public HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter bandwidthMeter) {
         return new DefaultHttpDataSourceFactory(Util.getUserAgent(requireActivity(), "ExoPlayerDemo"), bandwidthMeter);
+    }
+
+
+
+    private void loadNextVideo() {
+        // Implement logic to load the next video
+    }
+
+    private void loadPreviousVideo() {
+        // Implement logic to load the previous video
     }
 
     @Subscribe
