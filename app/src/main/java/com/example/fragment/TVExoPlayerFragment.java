@@ -83,11 +83,13 @@ public class TVExoPlayerFragment extends Fragment {
         f.setArguments(args);
         return f;
     }
-    public static TVExoPlayerFragment newInstance(int selectedIndex, ArrayList<ItemTV> videoList) {
+    public static TVExoPlayerFragment newInstance(int selectedIndex, ArrayList<ItemTV> videoList, String SId) {
         TVExoPlayerFragment fragment = new TVExoPlayerFragment();
         Bundle args = new Bundle();
         args.putInt("SelectedIndex", selectedIndex);
         args.putParcelableArrayList("VideoList", videoList);
+        args.putString(streamUrl, SId);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -137,7 +139,7 @@ public class TVExoPlayerFragment extends Fragment {
                                 // Navigate to the next video
                                 int nextIndex = (selectedIndex + 1) % videoList.size();
                                 // Update fragment with the next video
-                                TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList);
+                                TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList,channelUrl);
                                 getParentFragmentManager().beginTransaction()
                                         .replace(R.id.playerSection, nextFragment)
                                         .commit();

@@ -455,7 +455,7 @@ public class TVDetailsActivity extends BaseActivity {
             switch (itemTV.getTvType()) { //URL Embed
                 case Constant.VIDEO_TYPE_HLS:
                     if (isAndroidTV()) {
-                        TVExoPlayerFragment fragment = TVExoPlayerFragment.newInstance(selectedIndex, videoList);
+                        TVExoPlayerFragment fragment = TVExoPlayerFragment.newInstance(selectedIndex, videoList,streamUrl);
                         fragmentManager.beginTransaction().replace(R.id.playerSection, fragment).commitAllowingStateLoss();
                     } else {
                         if (casty.isConnected()) {
