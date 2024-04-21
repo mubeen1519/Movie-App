@@ -147,7 +147,9 @@ public class TVExoPlayerFragment extends Fragment {
                             // Do something when the right button is pressed
                             int nextIndex = (selectedIndex + 1) % videoList.size();
                             // Update fragment with the next video
-                            TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList,channelUrl);
+                            ItemTV nextVideo = videoList.get(nextIndex);
+                            channelUrl = nextVideo.getTvURL(); // Assuming tvURL is the URL of the video
+                            TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList, channelUrl);
                             getParentFragmentManager().beginTransaction()
                                     .replace(R.id.playerSection, nextFragment)
                                     .commit();
