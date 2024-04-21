@@ -128,27 +128,35 @@ public class TVExoPlayerFragment extends Fragment {
         playerView.requestFocus();
         player.setRepeatMode(Player.REPEAT_MODE_ALL);
 
-        playerView.setControllerVisibilityListener(new PlayerControlView.VisibilityListener() {
+        View decorView = Objects.requireNonNull(getActivity()).getWindow().getDecorView();
+        decorView.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onVisibilityChange(int visibility) {
-                if (visibility == View.VISIBLE) {
-                    playerView.setOnKeyListener(new View.OnKeyListener() {
-                        @Override
-                        public boolean onKey(View v, int keyCode, KeyEvent event) {
-                            if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                                // Navigate to the next video
-                                int nextIndex = (selectedIndex + 1) % videoList.size();
-                                // Update fragment with the next video
-                                TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList,channelUrl);
-                                getParentFragmentManager().beginTransaction()
-                                        .replace(R.id.playerSection, nextFragment)
-                                        .commit();
-                                return true;
-                            }
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_DPAD_UP:
+                            // Do something when the up button is pressed
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_DOWN:
+                            // Do something when the down button is pressed
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_LEFT:
+                            // Do something when the left button is pressed
+                            break;
+                        case KeyEvent.KEYCODE_DPAD_RIGHT:
+                            // Do something when the right button is pressed
+                            int nextIndex = (selectedIndex + 1) % videoList.size();
+                            // Update fragment with the next video
+                            TVExoPlayerFragment nextFragment = TVExoPlayerFragment.newInstance(nextIndex, videoList,channelUrl);
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.playerSection, nextFragment)
+                                    .commit();
+                            break;
+                        default:
                             return false;
-                        }
-                    });
+                    }
                 }
+                return true;
             }
         });
 
